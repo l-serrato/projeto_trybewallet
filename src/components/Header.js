@@ -11,6 +11,7 @@ class Header extends React.Component {
           Email:
           {email}
         </span>
+        <br />
         <span data-testid="total-field">
           { `Despesas:${0}`}
         </span>
