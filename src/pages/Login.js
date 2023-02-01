@@ -4,72 +4,87 @@ import PropTypes from 'prop-types';
 import { loginOk } from '../redux/actions';
 
 class Login extends React.Component {
-  state = {
-    email: '',
-    password: '',
-    btnOff: true,
-  };
+  constructor() {
+    super();
 
-  checkInput = () => {
-    const { email, password } = this.state;
-    const minLength = 6;
-    if (email.length && password.length >= minLength) {
-      this.setState({ btnOff: false });
-    } else {
-      this.setState({ btnOff: true });
-    }
-  };
+    this.state = {
+      email: '',
+      senha: '',
+    };
 
-  handleChange = ({ target: { name, value } }) => {
-    this.setState({ [name]: value }, () => this.checkInput());
-  };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-  handleSubmit = () => {
-    const { email } = this.state;
-    const { history, dispatch } = this.props;
-    dispatch(loginOk(email));
+  handleChange({ target }) {
+    this.setState({ [target.name]: target.value });
+  }
+
+  handleSubmit() {
+    const { submitLoginAction, history } = this.props;
+    submitLoginAction(this.state);
     history.push('/carteira');
-  };
+  }
 
   render() {
-    const { email, password, btnOff } = this.state;
+    const { email, senha } = this.state;
+
+    function validateEmail(emailAdress) {
+      const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+      return regexEmail.test(emailAdress);
+    }
+
+    function validatePassword(password) {
+      const minPassword = 6;
+      return password.length > minPassword;
+    }
     return (
-      <form>
-        <div>Login</div>
-        <input
-          className="input"
-          data-testid="email-input"
-          type="email"
-          name="email"
-          value={ email }
-          onChange={ this.handleChange }
-          id="email"
-        />
-        <input
-          data-testid="password-input"
-          type="password"
-          name="password"
-          value={ password }
-          onChange={ this.handleChange }
-          id="password"
-          minLength="6"
-        />
+      <main>
+        <label htmlFor="input-email">
+          Email:
+          <input
+            type="email"
+            id="input-email"
+            value={ email }
+            name="email"
+            onChange={ this.handleChange }
+            data-testid="email-input"
+          />
+        </label>
+        <br />
+        <label htmlFor="input-password">
+          Senha:
+          <input
+            type="password"
+            id="input-password"
+            value={ senha }
+            name="senha"
+            onChange={ this.handleChange }
+            data-testid="password-input"
+          />
+        </label>
+        <br />
         <button
-          type="button"
-          disabled={ btnOff }
+          type="submit"
+          disabled={ !validateEmail(email) || !validatePassword(senha) }
           onClick={ this.handleSubmit }
         >
           Entrar
-
         </button>
-      </form>
+      </main>
     );
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  submitLoginAction: (user) => dispatch(loginOk(user)),
+});
+
 Login.propTypes = {
-  history: PropTypes.objectOf().isRequired,
-  dispatch: PropTypes.func.isRequired,
+  submitLoginAction: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
-export default connect()(Login);
+export default connect(null, mapDispatchToProps)(Login);
