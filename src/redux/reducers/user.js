@@ -13,8 +13,8 @@ function user(state = INICIAL_STATE, action) {
   case LOGIN:
     return {
       ...state,
-      email: action.email,
-      senha: action.senha,
+      email: action.user.email,
+      senha: action.user.senha,
     };
   default:
     return state;
