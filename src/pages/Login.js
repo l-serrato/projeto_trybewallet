@@ -36,7 +36,7 @@ class Login extends React.Component {
 
     function validatePassword(password) {
       const minPassword = 6;
-      return password.length > minPassword;
+      return password.length >= minPassword;
     }
     return (
       <main>
