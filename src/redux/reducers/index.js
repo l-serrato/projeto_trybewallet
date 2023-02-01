@@ -14,6 +14,6 @@ const exampleReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-const rootReducer = combineReducers({ exampleReducer })
+const rootReducer = combineReducers({ exampleReducer });
 
 export default rootReducer;
