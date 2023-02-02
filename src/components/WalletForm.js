@@ -62,12 +62,12 @@ class WalletForm extends Component {
         <select
           name="pay_method"
           data-testid="method-input"
-          // onChange={ this.handleChange }
+          onChange={ this.handleChange }
           value={ payMethod }
         >
           <option value="Dinheiro">Dinheiro</option>
           <option value="Cartão de crédito">Cartão de crédito</option>
-          <option value="Cartão de dédito">Cartão de dédito</option>
+          <option value="Cartão de débito">Cartão de débito</option>
         </select>
         <select
           name="expense_type"
