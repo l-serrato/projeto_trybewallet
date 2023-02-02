@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrencyAPI } from '../redux/actions';
+import { fetchCurrencyAPI, addExpense } from '../redux/actions';
 
 class WalletForm extends Component {
   state = {
@@ -10,6 +10,7 @@ class WalletForm extends Component {
     currency: 'USD',
     payMethod: 'Cartão de crédito',
     expenseType: 'Alimentação',
+    id: 0,
   };
 
   componentDidMount() {
@@ -20,6 +21,23 @@ class WalletForm extends Component {
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
+  };
+
+  resetInputs = () => {
+    this.setState({
+      value: '',
+      description: '',
+    });
+  };
+
+  handleClick = () => {
+    const { id } = this.state;
+
+    const { dispatch } = this.props;
+
+    dispatch(addExpense({ ...this.state }));
+    this.setState({ id: id + 1 });
+    this.resetInputs();
   };
 
   render() {
@@ -81,6 +99,13 @@ class WalletForm extends Component {
           <option value="Transporte">Transporte</option>
           <option value="Saúde">Saúde</option>
         </select>
+        <button
+          type="button"
+          onClick={ this.handleClick }
+        >
+          Adicionar despesa
+
+        </button>
       </form>
     );
   }
