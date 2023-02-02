@@ -62,7 +62,7 @@ class WalletForm extends Component {
         <select
           name="pay_method"
           data-testid="method-input"
-          onChange={ this.handleChange }
+          // onChange={ this.handleChange }
           value={ payMethod }
         >
           <option value="Dinheiro">Dinheiro</option>
