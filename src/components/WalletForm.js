@@ -119,5 +119,5 @@ WalletForm.propTypes = {
   dispatch: PropTypes.func.isRequired,
   currencies: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
 };
-
+//
 export default connect(mapStateToProps)(WalletForm);
