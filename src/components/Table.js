@@ -14,7 +14,7 @@ class Table extends Component {
           <th>Método de pagamento</th>
         </tr>
         <tr>
-          <td>Valor</td>
+          <th>Valor</th>
         </tr>
         <tr>
           <th>Moeda</th>
