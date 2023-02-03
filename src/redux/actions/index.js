@@ -1,6 +1,7 @@
 export const LOGIN = 'LOGIN';
 export const CURRENCY = 'CURRENCY';
 export const ADD_EXPENSE = 'ADD_EXPENSE';
+export const REMOVE_EXPENSE = 'REMOVE_EXPENSE';
 
 export const loginOk = (user) => ({ type: LOGIN, user });
 
@@ -41,3 +42,15 @@ export const addExpense = (values) => async (dispatch) => {
     },
   });
 };
+
+export const removeExpense = (id) => ({
+  type: REMOVE_EXPENSE,
+  payload: id,
+});
+
+export function expensesRemover(id, expenses) {
+  return async (dispatch) => {
+    const newExpenses = expenses.map((expense) => id !== expense.id);
+    dispatch(removeExpense(newExpenses));
+  };
+}
